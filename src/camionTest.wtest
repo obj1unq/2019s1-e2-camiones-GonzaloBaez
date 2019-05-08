@@ -1,0 +1,52 @@
+import camion.*
+import cosas.*
+
+
+test "cargar ladrillos, bumblebee y arenaGranel. Descargar bumblebee" {
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(bumblebee)
+	camion.cargar(arenaAGranel)
+	assert.equals([paqueteDeLadrillos,bumblebee,arenaAGranel],camion.cosas())
+	camion.descargar(bumblebee)
+	assert.equals([paqueteDeLadrillos,arenaAGranel],camion.cosas())
+
+}
+
+test "cargar ladrillos, bumblebee y knightRider. El peso es 1302"{
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(bumblebee)
+	camion.cargar(knightRider)
+	assert.equals(2302,camion.pesoTotal())
+}
+
+test "cargar 200 ladrillos, bumblebee, knightRider. el peso esta excedido"{
+	paqueteDeLadrillos.cantDeLadrillos(200)
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(bumblebee)
+	camion.cargar(knightRider)
+	assert.that(camion.excedidoDePeso())
+}
+
+test "cargar ladrillos, bumblebee y knightRider. Devuelve los que tengan peligrosidad mayor a 5"{
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(bumblebee)
+	camion.cargar(knightRider)
+	assert.equals([bumblebee,knightRider],camion.objetosPeligrosos(5))
+}
+test "cargar bateria antiaerea, bumblebee, ladrillos y arena. Devuelve los que son mas peligrosos que knight rider"{
+	bateriaAntiaerea.ponerMisiles()
+	camion.cargar(bateriaAntiaerea)
+	camion.cargar(bumblebee)
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(arenaAGranel)
+	assert.equals([bateriaAntiaerea,bumblebee],camion.objetosMasPeligrososQue(knightRider))
+}
+
+test "puede circular loco"{
+	bateriaAntiaerea.ponerMisiles()
+	camion.cargar(bateriaAntiaerea)
+	camion.cargar(bumblebee)
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(arenaAGranel)
+	assert.that(camion.puedeCircularEnRuta(100))
+}
