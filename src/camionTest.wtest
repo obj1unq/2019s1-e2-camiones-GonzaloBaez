@@ -12,11 +12,11 @@ test "cargar ladrillos, bumblebee y arenaGranel. Descargar bumblebee" {
 
 }
 
-test "cargar ladrillos, bumblebee y knightRider. El peso es 1302"{
+test "cargar ladrillos, bumblebee y knightRider. El peso es 2326"{
 	camion.cargar(paqueteDeLadrillos)
 	camion.cargar(bumblebee)
 	camion.cargar(knightRider)
-	assert.equals(2302,camion.pesoTotal())
+	assert.equals(2326,camion.pesoTotal())
 }
 
 test "cargar 200 ladrillos, bumblebee, knightRider. el peso esta excedido"{
@@ -42,11 +42,48 @@ test "cargar bateria antiaerea, bumblebee, ladrillos y arena. Devuelve los que s
 	assert.equals([bateriaAntiaerea,bumblebee],camion.objetosMasPeligrososQue(knightRider))
 }
 
-test "puede circular loco"{
+test "puede circular"{
 	bateriaAntiaerea.ponerMisiles()
 	camion.cargar(bateriaAntiaerea)
 	camion.cargar(bumblebee)
 	camion.cargar(paqueteDeLadrillos)
 	camion.cargar(arenaAGranel)
 	assert.that(camion.puedeCircularEnRuta(100))
+}
+
+test "cargar bateria antiaerea, bumblebee, ladrillos y arena. Devuelve los que pesan entre 26 y 800 kg"{
+	camion.cargar(bateriaAntiaerea)
+	camion.cargar(bumblebee)
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(arenaAGranel)
+	assert.equals([bateriaAntiaerea,bumblebee,paqueteDeLadrillos],camion.tieneAlgoQuePesaEntre(26,800))
+}
+
+test "cargar bateria antiaerea, bumblebee, ladrillos y arena. Devuelve el mas pesado"{
+	camion.cargar(bateriaAntiaerea)
+	camion.cargar(bumblebee)
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(arenaAGranel)
+	assert.equals(bumblebee,camion.cosaMasPesada())
+}
+
+test "cargar bateria antiaerea, bumblebee, ladrillos y arena. Devuelve la cantidad de bultos"{
+	paqueteDeLadrillos.cantDeLadrillos(100)
+	camion.cargar(bateriaAntiaerea)
+	assert.equals(2,camion.totalBultos()) 
+	camion.cargar(bumblebee)
+	assert.equals(4,camion.totalBultos()) 
+	camion.cargar(paqueteDeLadrillos)
+	assert.equals(6,camion.totalBultos()) 
+	camion.cargar(arenaAGranel) 
+	assert.equals(7,camion.totalBultos())
+}
+
+test "cargar bateria antiaerea, bumblebee, ladrillos y arena. Devuelve el peso de todos"{
+	paqueteDeLadrillos.cantDeLadrillos(100)
+	camion.cargar(bateriaAntiaerea)
+	camion.cargar(bumblebee)
+	camion.cargar(paqueteDeLadrillos)
+	camion.cargar(arenaAGranel) 
+	assert.equals([300,800,224,20],camion.pesos())
 }
