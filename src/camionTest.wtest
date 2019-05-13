@@ -56,7 +56,7 @@ test "cargar bateria antiaerea, bumblebee, ladrillos y arena. Devuelve los que p
 	camion.cargar(bumblebee)
 	camion.cargar(paqueteDeLadrillos)
 	camion.cargar(arenaAGranel)
-	assert.equals([bateriaAntiaerea,bumblebee,paqueteDeLadrillos],camion.tieneAlgoQuePesaEntre(26,800))
+	assert.that(camion.tieneAlgoQuePesaEntre(26,800))
 }
 
 test "cargar bateria antiaerea, bumblebee, ladrillos y arena. Devuelve el mas pesado"{

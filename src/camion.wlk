@@ -32,7 +32,7 @@ object camion {
 		return cosas.all {cosa => cosa.nivelPeligrosidad() <= nivelMaximoPeligrosidad}
 	}
 	method tieneAlgoQuePesaEntre(min,max){
-		return cosas.filter {cosa => cosa.peso()>=min && cosa.peso()<=max}
+		return cosas.any {cosa => cosa.peso()>=min && cosa.peso()<=max}
 	}
 	method cosaMasPesada(){
 		return cosas.max ({cosa => cosa.peso()})
